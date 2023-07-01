@@ -18,7 +18,8 @@ def declare_winner(player: Player, pile: List):
 
 
 def generate_outcome_string(n_rounds: int, winner: Player, pile: List) -> str:
-    """Generate a log message describing the outcome of the game.
+    """
+    Generate a log message describing the outcome of the game.
 
     :param n_rounds: The number of rounds played
     :param winner: The winning Player
@@ -29,5 +30,5 @@ def generate_outcome_string(n_rounds: int, winner: Player, pile: List) -> str:
     return f"""
             Player one wins after {n_rounds} rounds!
             They have {len(winner.cards)} cards.
-            The size of the pile is {len(pile)}"
+            The size of the pile is {len(pile)}.
         """

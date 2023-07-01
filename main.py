@@ -46,7 +46,7 @@ if __name__ == "__main__":
             if random.random() >= 0.5:
                 declare_winner(player_one, pile)
             else:
-                declare_winner(player_one, pile)
+                declare_winner(player_two, pile)
 
         else:
             logging.info(f"No match in round {n_rounds}, continuing...")
