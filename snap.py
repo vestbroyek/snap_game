@@ -1,6 +1,6 @@
 from deck import StackOfDecks
-from player import Player
 import logging
+from player import Player
 import random
 from utils import declare_winner
 

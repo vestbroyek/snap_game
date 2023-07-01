@@ -6,6 +6,15 @@ class Card:
     """
     Represents a playing card in a standard deck.
     A value of 2 is the lowest; 11 represents Jack ... 14 represents Ace.
+
+    Attributes
+    ----------
+    suit: str
+        the card's suit
+    value: str
+        the integer value of the card, between 2 and 14
+    name: int
+        a user-friendly representation of the name of the card
     """
 
     def __init__(self, suit: str, value: int, name: str):
@@ -25,6 +34,21 @@ class Card:
 class Deck:
     """
     A deck of 52 standard playing cards.
+
+    Attributes
+    ----------
+    suits: List
+        a list of available suits
+    values: str
+        the integer values of the cards, between 2 and 14
+    names: int
+        user-friendly representations of the names of the card
+
+
+    Methods
+    ----------
+    build:
+        create a deck of 52 Cards
     """
 
     suits = ["Clubs", "Diamonds", "Hearts", "Spades"]
@@ -60,6 +84,19 @@ class Deck:
 class StackOfDecks:
     """
     A stack of decks, i.e. multiple Decks put together as if it were one deck.
+
+    Attributes
+    ----------
+    cards: List[Card]
+        all the cards in the deck
+
+    Methods
+    ----------
+    _shuffle:
+        shuffle the deck
+    deal:
+        first shuffle the deck, then return two halves
+
     """
 
     def __init__(self, n_decks: int):
@@ -68,7 +105,7 @@ class StackOfDecks:
             deck = Deck()
             self.cards.extend(deck.cards)
 
-    def shuffle(self):
+    def _shuffle(self):
         random.shuffle(self.cards)
 
     def deal(self) -> List[List[Card]]:
@@ -76,7 +113,7 @@ class StackOfDecks:
         # since a deck has 52 cards, len(self.cards) is always even
         halfway_point = len(self.cards) // 2
         # only need to shuffle before dealing, so can implement here
-        self.shuffle()
+        self._shuffle()
         first_half = self.cards[:halfway_point]
         second_half = self.cards[halfway_point:]
 
