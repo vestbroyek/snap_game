@@ -1,8 +1,8 @@
-from snap.deck import StackOfDecks
 import logging
-from snap.player import Player
 import random
 from snap.utils import declare_winner
+from snap.player import Player
+from snap.deck import StackOfDecks
 
 # Set up logger
 logging.basicConfig(level=logging.INFO, handlers=[logging.StreamHandler()])
