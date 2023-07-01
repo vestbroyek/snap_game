@@ -1,4 +1,4 @@
-from player import Player
+from snap.player import Player
 from typing import List
 
 

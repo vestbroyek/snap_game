@@ -1,4 +1,4 @@
-from deck import Card
+from snap.deck import Card
 
 
 class Player:
