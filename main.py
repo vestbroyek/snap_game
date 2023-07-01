@@ -1,6 +1,6 @@
 import logging
 import random
-from snap.utils import declare_winner
+from snap.utils import declare_winner, generate_outcome_string
 from snap.player import Player
 from snap.deck import StackOfDecks
 
@@ -13,9 +13,12 @@ if __name__ == "__main__":
     # Create two players
     player_one, player_two = Player(1), Player(2)
 
-    n_decks = int(
-        input("How many decks would you like to play with? Please enter an integer... ")
-    )
+    logging.info("How many decks would you like to play with?")
+    try:
+        n_decks = int(input("Please enter an integer... "))
+    except ValueError:
+        logging.warning("That is not a valid integer.")
+        n_decks = int(input("Please enter an integer... "))
 
     # Create a stack of the required number of decks, acting as one big deck
     deck = StackOfDecks(n_decks)
@@ -39,7 +42,7 @@ if __name__ == "__main__":
         pile.extend([card_one, card_two])
 
         if card_one == card_two:
-            # if the cards match, randomise who shouts first
+            # If the cards match, randomise who shouts first
             if random.random() >= 0.5:
                 declare_winner(player_one, pile)
             else:
@@ -49,10 +52,6 @@ if __name__ == "__main__":
             logging.info(f"No match in round {n_rounds}, continuing...")
 
     if len(player_one.cards) > len(player_two.cards):
-        logging.info(
-            f"Player one wins after {n_rounds}! They have {len(player_one.cards)} cards. The size of the pile is {len(pile)}"
-        )
+        logging.info(generate_outcome_string(n_rounds, player_one, pile))
     else:
-        logging.info(
-            f"Player two wins after {n_rounds} rounds! They have {len(player_two.cards)} cards. The size of the pile is {len(pile)}"
-        )
+        logging.info(generate_outcome_string(n_rounds, player_two, pile))

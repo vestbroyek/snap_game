@@ -10,7 +10,7 @@ class Player:
     name: int
         the player's "name", e.g. 1 or 2
     cards: list
-        the player's cards, populated not on class instantiation but when cards are dealt
+        the player's cards, populated when cards are dealt
 
     Methods
     ----------
