@@ -1,4 +1,5 @@
-from deck import StackOfDecks, Player
+from deck import StackOfDecks
+from player import Player
 import logging
 import random
 from utils import declare_winner
