@@ -37,23 +37,24 @@ class Deck:
 
     Attributes
     ----------
-    suits: List
-        a list of available suits
-    values: str
-        the integer values of the cards, between 2 and 14
-    names: int
-        user-friendly representations of the names of the card
-
+    cards: list
+        a list of Cards in the current deck
 
     Methods
     ----------
-    build:
-        create a deck of 52 Cards
+    __add__:
+        add two decks together
+    merge:
+        returns a stack of n decks
+    _shuffle:
+        shuffle the deck
+    deal:
+        split the deck equally between two players
     """
 
-    suits = ["Clubs", "Diamonds", "Hearts", "Spades"]
-    values = [*range(2, 15)]
-    names = [
+    SUITS = ["Clubs", "Diamonds", "Hearts", "Spades"]
+    VALUES = [*range(2, 15)]
+    NAMES = [
         "Two",
         "Three",
         "Four",
@@ -69,46 +70,48 @@ class Deck:
         "Ace",
     ]
 
-    def __init__(self):
-        self.cards = []
-        self.build()
+    def __init__(self, cards=None):
+        """
+        Create a new deck of 52 cards.
+        """
+        if cards is None:
+            cards = [
+                Card(suit, value, name)
+                for suit in self.SUITS
+                for value, name in zip(self.VALUES, self.NAMES)
+            ]
+        self.cards = cards
 
-    def build(self):
-        self.cards = [
-            Card(suit, value, name)
-            for suit in self.suits
-            for value, name in zip(self.values, self.names)
-        ]
+    def __add__(self, other: "Deck") -> "Deck":
+        """
+        Add two decks together. Necessary for merge (below).
 
+        :param other: another Deck to merge
+        :returns Deck: a new Deck instance
+        """
+        return Deck(self.cards + other.cards)
 
-class StackOfDecks:
-    """
-    A stack of decks, i.e. multiple Decks put together as if it were one deck.
+    @classmethod
+    def merge(cls, num_decks: int) -> "Deck":
+        """
+        Merge any number of decks into a single Deck.
 
-    Attributes
-    ----------
-    cards: List[Card]
-        all the cards in the deck
-
-    Methods
-    ----------
-    _shuffle:
-        shuffle the deck
-    deal:
-        first shuffle the deck, then return two halves
-
-    """
-
-    def __init__(self, n_decks: int):
-        self.cards = []
-        for i in range(n_decks):
-            deck = Deck()
-            self.cards.extend(deck.cards)
+        :param num_decks: the number of decks to create
+        :returns Deck: a new Deck instance
+        """
+        return sum((cls() for i in range(1, num_decks)), cls())
 
     def _shuffle(self):
+        """Shuffles the deck. Only used in deal()."""
         random.shuffle(self.cards)
 
     def deal(self) -> List[List[Card]]:
+        """
+        Deals the cards in the deck between two players.
+
+        :returns List[List[Cards]]: a list of length 2, representing
+        the cards to be dealt to player 1 and 2
+        """
         # divide the deck into two
         # since a deck has 52 cards, len(self.cards) is always even
         halfway_point = len(self.cards) // 2
